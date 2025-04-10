@@ -1,0 +1,117 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity tb_KO is
+end tb_KO;
+
+architecture Behavioral of tb_KO is
+
+    -- Signály pro propojení s DUT
+    signal clk1Hz     : std_logic := '0';
+    signal clk20Hz   : std_logic := '0';
+    signal SW         : std_logic := '0';
+    signal BTN_U      : std_logic := '0';
+    signal BTN_D      : std_logic := '0';
+    signal BTN_R      : std_logic := '0';
+    signal add_clk    : std_logic;
+    signal add_BTN_U  : std_logic;
+    signal add_BTN_D  : std_logic;
+    signal add_set    : std_logic_vector(2 downto 0);
+
+begin
+
+    -- Instanciace DUT (Design Under Test)
+    DUT: entity work.KO
+        port map (
+            clk1Hz    => clk1Hz,
+            clk20Hz  => clk20Hz,
+            SW        => SW,
+            BTN_U     => BTN_U,
+            BTN_D     => BTN_D,
+            BTN_R     => BTN_R,
+            add_clk   => add_clk,
+            add_BTN_U => add_BTN_U,
+            add_BTN_D => add_BTN_D,
+            add_set   => add_set
+        );
+
+    -- Generátor hodin 1Hz (perioda 1000 ms)
+    clk1Hz_process: process
+    begin
+        while now < 2 sec loop
+            clk1Hz <= '1';
+            wait for 500 ms;
+            clk1Hz <= '0';
+            wait for 500 ms;
+        end loop;
+        wait;
+    end process;
+
+    -- Generátor hodin 100Hz (perioda 10 ms)
+    clk100Hz_process: process
+    begin
+        while now < 2 sec loop
+            clk20Hz <= '1';
+            wait for 25 ms;
+            clk20Hz <= '0';
+            wait for 25 ms;
+        end loop;
+        wait;
+    end process;
+
+    -- Stimuly
+    stim_proc: process
+    begin
+        wait for 100 ms;
+        -- Výchozí režim: SW = '0' => clk1Hz připojeno na výstup add_clk
+        SW <= '0';
+
+        wait for 1 sec;
+
+        -- Režim nastavení: SW = '1'
+        SW <= '1';
+        wait for 50 ms;
+
+        -- BTN_U stisk
+        BTN_U <= '1';
+        wait for 100 ms;
+        BTN_U <= '0';
+
+        -- BTN_D stisk
+        BTN_D <= '1';
+        wait for 100 ms;
+        BTN_D <= '0';
+
+        -- Simulace zákmitů BTN_R (debounce test)
+        -- Tlačítko se chvěje (zákmit) několikrát v rámci 100 ms
+        BTN_R <= '1'; wait for 5 ms;
+        BTN_R <= '0'; wait for 5 ms;
+        BTN_R <= '1'; wait for 5 ms;
+        BTN_R <= '0'; wait for 5 ms;
+        BTN_R <= '1'; wait for 5 ms;
+        BTN_R <= '0'; wait for 5 ms;
+
+        -- Teď po 50 ms klid stiskneme znovu (tentokrát validní)
+        wait for 60 ms;
+        BTN_R <= '1'; wait for 20 ms;
+        BTN_R <= '0';
+
+        wait for 200 ms;
+
+        -- Ještě pár platných stisknutí BTN_R
+        wait for 100 ms;
+        BTN_R <= '1'; wait for 20 ms;
+        BTN_R <= '0';
+
+        wait for 200 ms;
+        BTN_R <= '1'; wait for 20 ms;
+        BTN_R <= '0';
+
+        wait for 500 ms;
+        SW <= '0'; -- návrat zpět do režimu hodin
+
+        wait;
+    end process;
+
+end Behavioral;
