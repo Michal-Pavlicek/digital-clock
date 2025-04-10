@@ -11,7 +11,7 @@ entity delicka_1Hz is
 end delicka_1Hz;
 
 architecture Behavioral of delicka_1Hz is
-    constant MAX_COUNT : integer := 5 - 1;
+    constant MAX_COUNT : integer := 50_000_000 - 1;
     signal counter : integer range 0 to MAX_COUNT := 0;
     signal clk_out : STD_LOGIC := '0';
 begin
