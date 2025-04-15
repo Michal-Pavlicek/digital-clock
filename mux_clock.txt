@@ -1,0 +1,104 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity mux_clock is
+    Port (
+        clk           : in  STD_LOGIC;
+        clk_1Hz       : in  STD_LOGIC;                      -- Automatické hodiny
+        manual_clk    : in  STD_LOGIC;                      -- Manuální hodiny
+        switch        : in  STD_LOGIC;                      -- Režim (0=auto, 1=manuál)
+        inc_time      : in  STD_LOGIC;                      -- Zvýšení času
+        dec_time      : in  STD_LOGIC;                      -- Snížení času
+        move_time     : in  STD_LOGIC;                      -- Výběr jednotky (HH/MM/SS)
+        selected_mode : out STD_LOGIC_VECTOR(2 downto 0);   -- Aktivní mód
+        selected_clk  : out STD_LOGIC;                      -- Výstupní hodiny
+        enabled_inc   : out STD_LOGIC;                      -- Impulz pro zvýšení
+        enabled_dec   : out STD_LOGIC                       -- Impulz pro snížení
+    );
+end mux_clock;
+
+architecture Behavioral of mux_clock is
+    signal move_sync, inc_sync, dec_sync : std_logic_vector(1 downto 0) := "00";
+    signal move_deb, inc_deb, dec_deb    : std_logic := '0';
+    signal move_prev, inc_prev, dec_prev : std_logic := '0';
+    signal tick_10ms     : std_logic := '0';
+    signal tick_counter  : integer range 0 to 999999 := 0;
+    signal cnt           : integer range 0 to 2 := 0;
+    signal inc_pulse, dec_pulse : std_logic := '0';
+
+begin
+
+    -- Vytvoření 10 ms impulzu
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if tick_counter = 999999 then
+                tick_counter <= 0;
+                tick_10ms <= '1';
+            else
+                tick_counter <= tick_counter + 1;
+                tick_10ms <= '0';
+            end if;
+        end if;
+    end process;
+
+    -- Synchronizace vstupních tlačítek
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            move_sync <= move_sync(0) & move_time;
+            inc_sync  <= inc_sync(0)  & inc_time;
+            dec_sync  <= dec_sync(0)  & dec_time;
+        end if;
+    end process;
+
+    -- Vzorkování tlačítek každých 10 ms
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if tick_10ms = '1' then
+                move_deb <= move_sync(1);  -- move_time
+                inc_deb  <= inc_sync(1);   -- inc_time
+                dec_deb  <= dec_sync(1);   -- dec_time
+            end if;
+        end if;
+    end process;
+
+    -- Detekce náběžné hrany
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            -- Aktualizace předchozích stavů
+            move_prev <= move_deb;
+            inc_prev  <= inc_deb;
+            dec_prev  <= dec_deb;
+            
+            -- Detekce hrany
+            if move_deb = '1' and move_prev = '0' then
+                if cnt = 2 then
+                    cnt <= 0;
+                else
+                    cnt <= cnt + 1;
+                end if;
+            end if;
+
+            inc_pulse <= '0';
+            if inc_deb = '1' and inc_prev = '0' then
+                inc_pulse <= '1';
+            end if;
+
+            dec_pulse <= '0';
+            if dec_deb = '1' and dec_prev = '0' then
+                dec_pulse <= '1';
+            end if;
+        end if;
+    end process;
+
+    -- Výstupy
+    selected_mode <= std_logic_vector(to_unsigned(cnt, 3));
+    selected_clk  <= clk_1Hz when (switch = '0') else manual_clk;
+    enabled_inc   <= inc_pulse when (switch = '1') else '0';
+    enabled_dec   <= dec_pulse when (switch = '1') else '0';
+
+end Behavioral;
