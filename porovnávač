@@ -1,0 +1,40 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity PorovnavacCasu is
+  port (
+    clk           : in  std_logic;  -- hlavní hodinový signál
+    A1, A2, A3    : in  std_logic_vector(5 downto 0);
+    B1, B2, B3    : in  std_logic_vector(5 downto 0);
+    global_disable: in  std_logic;  -- vstupní signál pro vypnutí alarmu (např. tlačítko)
+    alarm         : out std_logic   -- výsledný alarm – '1' pokud je aktivní, jinak '0'
+  );
+end PorovnavacCasu;
+
+architecture Behavioral of PorovnavacCasu is
+  signal alarm_reg : std_logic := '0';
+begin
+  process(clk)
+  begin
+    if rising_edge(clk) then
+      -- Pokud je aktivováno global_disable, vynulujeme alarm.
+      if global_disable = '1' then
+        alarm_reg <= '0';
+      
+      -- Pokud ještě není alarm aktivován a čísla jsou rovná, nastav alarm.
+      elsif (A1 = B1) and (A2 = B2) and (A3 = B3) and (alarm_reg = '0') then
+        alarm_reg <= '1';
+      
+      -- V tomto návrhu necháváme stav, i kdyby čísla přestala být rovná,
+      -- protože chceme, aby zůstal aktivní až do manuálního resetu.
+      -- Pokud byste chtěl alarm i automaticky vynulovat, když čísla již nejsou rovná,
+      -- použijte: else alarm_reg <= '0';
+      else
+        alarm_reg <= alarm_reg;
+      end if;
+    end if;
+  end process;
+  
+  alarm <= alarm_reg;
+end Behavioral;
