@@ -1,0 +1,94 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity tb_HoursCounter is
+end tb_HoursCounter;
+
+architecture Behavioral of tb_HoursCounter is
+
+    signal clk_1000Hz : std_logic := '0';
+    signal add_clk    : std_logic := '0';
+    signal add_BTN_U  : std_logic := '0';
+    signal add_BTN_D  : std_logic := '0';
+    signal VEC_set    : std_logic_vector(1 downto 0) := "00";
+    signal res        : std_logic := '0';
+    signal SEC_out    : std_logic_vector(5 downto 0);
+    signal carry      : std_logic;
+
+begin
+
+    uut: entity work.HoursCounter
+        port map (
+            clk_1000Hz => clk_1000Hz,
+            add_clk    => add_clk,
+            add_BTN_U  => add_BTN_U,
+            add_BTN_D  => add_BTN_D,
+            VEC_set    => VEC_set,
+            res        => res,
+            SEC_out    => SEC_out,
+            carry      => carry
+        );
+
+    -- Generování 1000 Hz hodin (1 ms perioda)
+    clk_1000Hz_process: process
+    begin
+        wait for 0.5 ms;
+        clk_1000Hz <= not clk_1000Hz;
+    end process;
+
+    -- Generování "add_clk" signálu (10 Hz pro rychlé testování)
+    add_clk_process: process
+    begin
+        wait for 50 ms;
+        add_clk <= not add_clk;
+    end process;
+
+    -- Stimulus
+    stim_proc: process
+    begin
+        wait for 100 ms;
+        res <= '1';  -- Reset
+        wait for 100 ms;
+        res <= '0';
+
+        -- Necháme čítač běžet v auto režimu
+        VEC_set <= "00";
+        wait for 2 sec;
+
+        -- Přepnutí do režimu nastavování
+        VEC_set <= "11";
+        
+        -- Tlačítko nahoru
+        wait for 100 ms;
+        add_BTN_U <= '1';
+        wait for 200 ms;
+        add_BTN_U <= '0';
+
+        -- Tlačítko dolů několikrát
+        wait for 200 ms;
+        add_BTN_D <= '1';
+        wait for 200 ms;
+        add_BTN_D <= '0';
+
+        wait for 200 ms;
+        add_BTN_D <= '1';
+        wait for 200 ms;
+        add_BTN_D <= '0';
+
+        wait for 200 ms;
+        add_BTN_D <= '1';
+        wait for 200 ms;
+        add_BTN_D <= '0';
+
+        wait for 200 ms;
+        add_BTN_D <= '1';
+        wait for 200 ms;
+        add_BTN_D <= '0';
+
+        -- Konec
+        wait for 1 sec;
+        wait;
+    end process;
+
+end Behavioral;
