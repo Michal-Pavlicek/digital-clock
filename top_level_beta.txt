@@ -1,0 +1,246 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity top_level is
+    Port (
+        clk_100MHz   : in  STD_LOGIC;
+        reset        : in  STD_LOGIC;
+        switch       : in  STD_LOGIC;
+        manual_clk_btn : in  STD_LOGIC;
+        inc_btn      : in  STD_LOGIC;
+        dec_btn      : in  STD_LOGIC;
+        move_btn     : in  STD_LOGIC;
+        seg          : out STD_LOGIC_VECTOR(6 downto 0);
+        an           : out STD_LOGIC_VECTOR(7 downto 0)
+    );
+end top_level;
+
+architecture Behavioral of top_level is
+    component delicka_1Hz is
+        Port ( clk_100MHz : in  STD_LOGIC;
+               reset      : in  STD_LOGIC;
+               clk_1Hz    : out STD_LOGIC);
+    end component;
+
+    component delicka_480Hz is
+        Port ( clk_100MHz : in  STD_LOGIC;
+               reset      : in  STD_LOGIC;
+               clk_out    : out STD_LOGIC);
+    end component;
+
+    component mux_clock is
+        Port ( clk           : in  STD_LOGIC;
+               clk_1Hz       : in  STD_LOGIC;
+               manual_clk    : in  STD_LOGIC;
+               switch        : in  STD_LOGIC;
+               inc_time      : in  STD_LOGIC;
+               dec_time      : in  STD_LOGIC;
+               move_time     : in  STD_LOGIC;
+               selected_mode : out STD_LOGIC_VECTOR(2 downto 0);
+               selected_clk  : out STD_LOGIC;
+               enabled_inc   : out STD_LOGIC;
+               enabled_dec   : out STD_LOGIC);
+    end component;
+
+    component second_counter is
+        Port ( clk       : in  STD_LOGIC;
+               reset     : in  STD_LOGIC;
+               inc_time  : in  STD_LOGIC;
+               dec_time  : in  STD_LOGIC;
+               move_time : in  STD_LOGIC;
+               carry_in  : in  STD_LOGIC;
+               value_out : out STD_LOGIC_VECTOR(5 downto 0);
+               carry_out : out STD_LOGIC);
+    end component;
+
+    component minute_counter is
+        Port ( clk       : in  STD_LOGIC;
+               reset     : in  STD_LOGIC;
+               inc_time  : in  STD_LOGIC;
+               dec_time  : in  STD_LOGIC;
+               move_time : in  STD_LOGIC;
+               carry_in  : in  STD_LOGIC;
+               value_out : out STD_LOGIC_VECTOR(5 downto 0);
+               carry_out : out STD_LOGIC);
+    end component;
+
+    component hour_counter is
+        Port ( clk       : in  STD_LOGIC;
+               reset     : in  STD_LOGIC;
+               inc_time  : in  STD_LOGIC;
+               dec_time  : in  STD_LOGIC;
+               move_time : in  STD_LOGIC;
+               carry_in  : in  STD_LOGIC;
+               value_out : out STD_LOGIC_VECTOR(5 downto 0);
+               carry_out : out STD_LOGIC);
+    end component;
+
+    component bin2seg_digclk is
+        Port ( sec_in     : in  STD_LOGIC_VECTOR(5 downto 0);
+               min_in     : in  STD_LOGIC_VECTOR(5 downto 0);
+               hour_in    : in  STD_LOGIC_VECTOR(4 downto 0);
+               switch     : in  STD_LOGIC;
+               CAS        : in  STD_LOGIC_VECTOR(2 downto 0);
+               clk_480Hz  : in  STD_LOGIC;
+               sel_smh    : in  STD_LOGIC_VECTOR(2 downto 0);
+               seg        : out STD_LOGIC_VECTOR(6 downto 0);
+               an         : out STD_LOGIC_VECTOR(7 downto 0));
+    end component;
+
+    -- Clock signals
+    signal clk_1Hz      : STD_LOGIC;
+    signal clk_480Hz    : STD_LOGIC;
+    signal selected_clk : STD_LOGIC;
+    
+    -- Control signals
+    signal selected_mode : STD_LOGIC_VECTOR(2 downto 0);
+    signal enabled_inc   : STD_LOGIC;
+    signal enabled_dec   : STD_LOGIC;
+    signal manual_clk_pulse : STD_LOGIC := '0';
+    
+    -- Time values
+    signal sec_value  : STD_LOGIC_VECTOR(5 downto 0);
+    signal min_value  : STD_LOGIC_VECTOR(5 downto 0);
+    signal hour_value : STD_LOGIC_VECTOR(5 downto 0);
+    
+    -- Carry signals
+    signal carry_sec_to_min : STD_LOGIC;
+    signal carry_min_to_hour : STD_LOGIC;
+    
+    -- Button processing signals
+    signal manual_sync_reg : STD_LOGIC_VECTOR(1 downto 0) := "00";
+    signal manual_debounced : STD_LOGIC := '0';
+    signal manual_prev : STD_LOGIC := '0';
+    signal tick_10ms : STD_LOGIC := '0';
+    signal tick_counter : integer range 0 to 999999 := 0;
+    
+    -- Mode selection
+    signal move_sec, move_min, move_hour : STD_LOGIC;
+
+begin
+
+-- 10ms tick generator for debouncing
+process(clk_100MHz)
+begin
+    if rising_edge(clk_100MHz) then
+        if tick_counter = 999999 then
+            tick_counter <= 0;
+            tick_10ms <= '1';
+        else
+            tick_counter <= tick_counter + 1;
+            tick_10ms <= '0';
+        end if;
+    end if;
+end process;
+
+-- Manual clock button processing
+process(clk_100MHz)
+begin
+    if rising_edge(clk_100MHz) then
+        -- Synchronize button input
+        manual_sync_reg <= manual_sync_reg(0) & manual_clk_btn;
+        
+        -- Debounce with 10ms sampling
+        if tick_10ms = '1' then
+            manual_debounced <= manual_sync_reg(1);
+        end if;
+        
+        -- Edge detection
+        manual_prev <= manual_debounced;
+        if manual_debounced = '1' and manual_prev = '0' then
+            manual_clk_pulse <= '1';
+        else
+            manual_clk_pulse <= '0';
+        end if;
+    end if;
+end process;
+
+-- Mode selection signals
+move_sec <= '1' when selected_mode = "000" else '0';
+move_min <= '1' when selected_mode = "001" else '0';
+move_hour <= '1' when selected_mode = "010" else '0';
+
+-- Clock dividers
+delicka_1Hz_inst: delicka_1Hz
+port map(
+    clk_100MHz => clk_100MHz,
+    reset => reset,
+    clk_1Hz => clk_1Hz
+);
+
+delicka_480Hz_inst: delicka_480Hz
+port map(
+    clk_100MHz => clk_100MHz,
+    reset => reset,
+    clk_out => clk_480Hz
+);
+
+-- Clock multiplexer
+mux_clock_inst: mux_clock
+port map(
+    clk => clk_100MHz,
+    clk_1Hz => clk_1Hz,
+    manual_clk => manual_clk_pulse,
+    switch => switch,
+    inc_time => inc_btn,
+    dec_time => dec_btn,
+    move_time => move_btn,
+    selected_mode => selected_mode,
+    selected_clk => selected_clk,
+    enabled_inc => enabled_inc,
+    enabled_dec => enabled_dec
+);
+
+-- Time counters
+second_counter_inst: second_counter
+port map(
+    clk => selected_clk,
+    reset => reset,
+    inc_time => enabled_inc,
+    dec_time => enabled_dec,
+    move_time => move_sec,
+    carry_in => '1',
+    value_out => sec_value,
+    carry_out => carry_sec_to_min
+);
+
+minute_counter_inst: minute_counter
+port map(
+    clk => selected_clk,
+    reset => reset,
+    inc_time => enabled_inc,
+    dec_time => enabled_dec,
+    move_time => move_min,
+    carry_in => carry_sec_to_min,
+    value_out => min_value,
+    carry_out => carry_min_to_hour
+);
+
+hour_counter_inst: hour_counter
+port map(
+    clk => selected_clk,
+    reset => reset,
+    inc_time => enabled_inc,
+    dec_time => enabled_dec,
+    move_time => move_hour,
+    carry_in => carry_min_to_hour,
+    value_out => hour_value,
+    carry_out => open
+);
+
+-- Display driver
+bin2seg_digclk_inst: bin2seg_digclk
+port map(
+    sec_in => sec_value,
+    min_in => min_value,
+    hour_in => hour_value(4 downto 0),
+    switch => switch,
+    CAS => selected_mode,
+    clk_480Hz => clk_480Hz,
+    sel_smh => selected_mode,
+    seg => seg,
+    an => an
+);
+
+end Behavioral;
