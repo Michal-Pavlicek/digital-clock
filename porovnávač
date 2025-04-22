@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity compare_alarm is
+entity alarm_comp is
   port (
     SW_ON         : in  std_logic;  -- Vstupní spínač
     clk           : in  std_logic;  -- Hlavní hodinový signál
@@ -13,9 +13,9 @@ entity compare_alarm is
     global_disable: in  std_logic;  -- Vstupní signál pro vypnutí alarmu (např. tlačítko)
     alarm         : out std_logic   -- Výsledný alarm – '1' pokud je aktivní, jinak '0'
   );
-end compare_alarm;
+end alarm_comp;
 
-architecture Behavioral of compare_alarm is
+architecture Behavioral of alarm_comp is
   signal alarm_reg : std_logic := '0';
 begin
   process(clk)
