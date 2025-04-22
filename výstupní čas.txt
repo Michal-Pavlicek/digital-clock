@@ -1,0 +1,68 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity signal_control is
+  port (
+    control              : in  std_logic_vector(1 downto 0); -- Dvoubitový vstupní vektor pro řízení
+    clk_1hz              : in  std_logic; -- Hodiny 1 Hz
+    sec_clk, min_clk     : in std_logic_vector(5 downto 0); -- Hodiny - sekundy a minuty (6 bitů)
+    hour_clk             : in std_logic_vector(4 downto 0); -- Hodiny - hodiny (5 bitů)
+    sec_alarm, min_alarm : in std_logic_vector(5 downto 0); -- Alarm - sekundy a minuty (6 bitů)
+    hour_alarm           : in std_logic_vector(4 downto 0); -- Alarm - hodiny (5 bitů)
+    sec_stop, min_stop   : in std_logic_vector(5 downto 0); -- Stopwatch - sekundy a minuty (6 bitů)
+    hour_stop            : in std_logic_vector(4 downto 0); -- Stopwatch - hodiny (5 bitů)
+    sec_out, min_out     : out std_logic_vector(5 downto 0); -- Výstupy - sekundy a minuty (6 bitů)
+    hour_out             : out std_logic_vector(4 downto 0)  -- Výstupy - hodiny (5 bitů)
+  );
+end signal_control;
+
+architecture Behavioral of signal_control is
+  signal inactivity_counter : integer := 0; -- Čítač pro sledování nečinnosti
+  signal current_mode : std_logic_vector(1 downto 0) := "00"; -- Aktivní režim
+begin
+  process(clk_1hz, control, sec_alarm, min_alarm, hour_alarm)
+  begin
+    if rising_edge(clk_1hz) then
+      if control = "01" then -- Aktivace sledování pouze při control = "01"
+        -- Sledujeme změny na alarmových signálech
+        if (sec_alarm /= sec_out) or (min_alarm /= min_out) or (hour_alarm /= hour_out) then
+          inactivity_counter <= 0; -- Reset čítače při aktivitě
+        else
+          -- Inkrementace čítače při nečinnosti
+          inactivity_counter <= inactivity_counter + 1;
+        end if;
+
+        -- Přepnutí na původní clk po 20 sekundách nečinnosti
+        if inactivity_counter >= 20 then
+          current_mode <= "00"; -- Přepnutí na originální clk
+        else
+          current_mode <= control; -- Zachování aktuálního režimu
+        end if;
+      else
+        inactivity_counter <= 0; -- Reset čítače při jiných režimech
+        current_mode <= control; -- Nastavení režimu podle control
+      end if;
+    end if;
+  end process;
+
+  -- Propouštění signálů na základě aktuálního režimu
+  case current_mode is
+    when "00" =>
+      sec_out <= sec_clk;
+      min_out <= min_clk;
+      hour_out <= hour_clk;
+    when "01" =>
+      sec_out <= sec_alarm;
+      min_out <= min_alarm;
+      hour_out <= hour_alarm;
+    when "10" =>
+      sec_out <= sec_stop;
+      min_out <= min_stop;
+      hour_out <= hour_stop;
+    when others =>
+      sec_out <= sec_clk;
+      min_out <= min_clk;
+      hour_out <= hour_clk;
+  end case;
+end Behavioral;
