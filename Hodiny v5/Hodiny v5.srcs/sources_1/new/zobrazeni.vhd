@@ -1,0 +1,167 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity bin2seg_digclk is
+    port (
+        sec_in     : in  STD_LOGIC_VECTOR(5 downto 0);
+        min_in     : in  STD_LOGIC_VECTOR(5 downto 0);
+        hour_in    : in  STD_LOGIC_VECTOR(4 downto 0);
+        switch     : in  STD_LOGIC;
+        CAS        : in  STD_LOGIC_VECTOR(1 downto 0);
+        clk_480Hz  : in  STD_LOGIC;
+        sel_smh    : in  STD_LOGIC_VECTOR(2 downto 0);
+        seg        : out STD_LOGIC_VECTOR(6 downto 0);
+        an         : out STD_LOGIC_VECTOR(7 downto 0)
+    );
+end bin2seg_digclk;
+
+architecture Behavioral of bin2seg_digclk is
+
+    signal clk_cnt    : integer := 0;
+    signal digit_idx  : integer range 0 to 7 := 0;
+    signal digits     : std_logic_vector(55 downto 0); -- 8 digits � 7 segments
+    signal blink_en   : std_logic := '0';
+
+    signal seg_data   : std_logic_vector(6 downto 0);
+    signal an_data    : std_logic_vector(7 downto 0) := (others => '1');
+
+    -- BCD values
+    signal hour_bcd_hi, hour_bcd_lo : std_logic_vector(3 downto 0);
+    signal min_bcd_hi,  min_bcd_lo  : std_logic_vector(3 downto 0);
+    signal sec_bcd_hi,  sec_bcd_lo  : std_logic_vector(3 downto 0);
+
+    -- Helper function: BCD to segment
+    function bcd2seg(bcd : std_logic_vector(3 downto 0)) return std_logic_vector is
+        variable seg : std_logic_vector(6 downto 0);
+    begin
+        case bcd is
+            when "0000" => seg := "0000001"; -- 0
+            when "0001" => seg := "1001111"; -- 1
+            when "0010" => seg := "0010010"; -- 2
+            when "0011" => seg := "0000110"; -- 3
+            when "0100" => seg := "1001100"; -- 4
+            when "0101" => seg := "0100100"; -- 5
+            when "0110" => seg := "0100000"; -- 6
+            when "0111" => seg := "0001111"; -- 7
+            when "1000" => seg := "0000000"; -- 8
+            when "1001" => seg := "0000100"; -- 9
+            when others => seg := "1111111"; -- blank
+        end case;
+        return seg;
+    end;
+
+    -- Function to decode CAS to C/A/S
+    function cas2seg(cas : std_logic_vector(2 downto 0)) return std_logic_vector is
+    begin
+        case cas is
+            when "00" => return "0110001"; -- C
+            when "01" => return "0001000"; -- A
+            when "10" => return "0110111"; -- S
+            when others => return "1111111"; -- blank
+        end case;
+    end;
+
+begin
+
+    -- Blink generator (assume 120Hz from clk_480Hz for 0.5s toggle)
+    process(clk_480Hz)
+        variable blink_cnt : integer := 0;
+    begin
+        if rising_edge(clk_480Hz) then  -- zm?n?no na clk_480Hz
+            if blink_cnt = 119 then  -- zm?n?no pro 480Hz, ka�d�ch 120 cykl? (pro p?lsekundov� blik�n�)
+                blink_en <= not blink_en;
+                blink_cnt := 0;
+            else
+                blink_cnt := blink_cnt + 1;
+            end if;
+        end if;
+    end process;
+
+    -- Convert binary to BCD (manual split)
+    hour_bcd_hi <= std_logic_vector(to_unsigned(to_integer(unsigned(hour_in)) / 10, 4));
+    hour_bcd_lo <= std_logic_vector(to_unsigned(to_integer(unsigned(hour_in)) mod 10, 4));
+
+    min_bcd_hi  <= std_logic_vector(to_unsigned(to_integer(unsigned(min_in)) / 10, 4));
+    min_bcd_lo  <= std_logic_vector(to_unsigned(to_integer(unsigned(min_in)) mod 10, 4));
+
+    sec_bcd_hi  <= std_logic_vector(to_unsigned(to_integer(unsigned(sec_in)) / 10, 4));
+    sec_bcd_lo  <= std_logic_vector(to_unsigned(to_integer(unsigned(sec_in)) mod 10, 4));
+
+    -- Digit multiplexer
+    process(clk_480Hz)  -- zm?n?no na clk_480Hz
+    begin
+        if rising_edge(clk_480Hz) then  -- zm?n?no na clk_480Hz
+            digit_idx <= (digit_idx + 1) mod 8;
+        end if;
+    end process;
+
+process(clk_480Hz, sec_in, min_in, hour_in, switch, sel_smh, CAS)
+begin
+    -- default off
+    an_data <= (others => '1');
+    seg_data <= "1111111";
+
+    case digit_idx is
+        when 0 =>  -- Hour high
+            if switch = '1' and sel_smh = "010" and blink_en = '0' then
+                seg_data <= "1111111";
+            else
+                seg_data <= bcd2seg(hour_bcd_hi);
+            end if;
+            an_data <= "01111111";
+
+        when 1 =>  -- Hour low
+            if switch = '1' and sel_smh = "010" and blink_en = '0' then
+                seg_data <= "1111111";
+            else
+                seg_data <= bcd2seg(hour_bcd_lo);
+            end if;
+            an_data <= "10111111";
+
+        when 2 =>  -- Min high
+            if switch = '1' and sel_smh = "001" and blink_en = '0' then
+                seg_data <= "1111111";
+            else
+                seg_data <= bcd2seg(min_bcd_hi);
+            end if;
+            an_data <= "11011111";
+
+        when 3 =>  -- Min low
+            if switch = '1' and sel_smh = "001" and blink_en = '0' then
+                seg_data <= "1111111";
+            else
+                seg_data <= bcd2seg(min_bcd_lo);
+            end if;
+            an_data <= "11101111";
+
+        when 4 =>  -- Sec high
+            if switch = '1' and sel_smh = "000" and blink_en = '0' then
+                seg_data <= "1111111";
+            else
+                seg_data <= bcd2seg(sec_bcd_hi);
+            end if;
+            an_data <= "11110111";
+
+        when 5 =>  -- Sec low
+            if switch = '1' and sel_smh = "000" and blink_en = '0' then
+                seg_data <= "1111111";
+            else
+                seg_data <= bcd2seg(sec_bcd_lo);
+            end if;
+            an_data <= "11111011";
+
+        when 6 =>  -- CAS indicator
+            seg_data <= cas2seg(CAS);
+            an_data <= "11111110";
+
+        when others =>  -- 7th digit - unused/debug
+            seg_data <= "1111111";
+            an_data <= "11111101";
+    end case;
+end process;
+
+    seg <= seg_data;
+    an  <= an_data;
+
+end Behavioral;

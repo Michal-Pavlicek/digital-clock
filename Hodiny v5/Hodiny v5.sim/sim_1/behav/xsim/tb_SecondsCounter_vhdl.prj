@@ -1,0 +1,15 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../hodiny.srcs/sources_1/new/Hodiny.vhd" \
+"../../../../hodiny.srcs/sources_1/new/KO.vhd" \
+"../../../../hodiny.srcs/sources_1/new/delicka_1000Hz.vhd" \
+"../../../../hodiny.srcs/sources_1/new/delicka_1Hz.vhd" \
+"../../../../hodiny.srcs/sources_1/new/minuty.vhd" \
+"../../../../hodiny.srcs/sources_1/new/sekundy.vhd" \
+"../../../../hodiny.srcs/sources_1/new/toplevel.vhd" \
+"../../../../hodiny.srcs/sources_1/new/zobrazeni.vhd" \
+"../../../../hodiny.srcs/sources_1/new/delicka_20Hz.vhd" \
+"../../../../hodiny.srcs/sim_1/new/tb_SecondsCounter.vhd" \
+
+# Do not sort compile order
+nosort

@@ -1,0 +1,134 @@
+#-----------------------------------------------------------
+# Vivado v2024.2 (64-bit)
+# SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
+# IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
+# SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
+# Start of session at: Wed Apr 23 16:31:03 2025
+# Process ID         : 7156
+# Current directory  : C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.runs/impl_1
+# Command line       : vivado.exe -log top_level.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source top_level.tcl -notrace
+# Log file           : C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.runs/impl_1/top_level.vdi
+# Journal file       : C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.runs/impl_1\vivado.jou
+# Running On         : AsusZenBook03
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-10510U CPU @ 1.80GHz
+# CPU Frequency      : 2304 MHz
+# CPU Physical cores : 4
+# CPU Logical cores  : 8
+# Host memory        : 16968 MB
+# Swap memory        : 2550 MB
+# Total Virtual      : 19518 MB
+# Available Virtual  : 13434 MB
+#-----------------------------------------------------------
+source top_level.tcl -notrace
+Command: link_design -top top_level -part xc7a50ticsg324-1L
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+INFO: [Device 21-403] Loading part xc7a50ticsg324-1L
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 646.199 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 25 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2024.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc]
+WARNING: [Vivado 12-584] No ports matched 'CLK100MHZ'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:7]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:7]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'CLK100MHZ'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:8]
+CRITICAL WARNING: [Vivado 12-4739] create_clock:No valid object(s) found for '-objects [get_ports CLK100MHZ]'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:8]
+Resolution: Check if the specified object(s) exists in the current design. If it does, ensure that the correct design hierarchy was specified for the object. If you are working with clocks, make sure create_clock was used to create the clock object before it is referenced.
+WARNING: [Vivado 12-584] No ports matched 'SW_res'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:27]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:27]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'CA'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:56]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:56]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'CB'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:57]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:57]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'CC'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:58]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:58]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'CD'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:59]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:59]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'CE'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:60]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:60]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'CF'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:61]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:61]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'CG'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:62]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:62]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'DP'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:63]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:63]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AN[0]'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:64]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:64]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AN[1]'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:65]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:65]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AN[2]'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:66]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:66]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AN[3]'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:67]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:67]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AN[4]'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:68]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:68]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AN[5]'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:69]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:69]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AN[6]'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:70]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:70]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'AN[7]'. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:71]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc:71]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+Finished Parsing XDC File [C:/Users/dejvi/OneDrive/Plocha/FEKT VUT/2. letn/DE1/Hodiny v5/Hodiny v5.srcs/constrs_1/new/Nexys A7-50T.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 761.090 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+7 Infos, 19 Warnings, 19 Critical Warnings and 0 Errors encountered.
+link_design completed successfully
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a50ti'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a50ti'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/hours_counter_inst/Q[0] has multiple drivers: hodiny_top_inst/hours_counter_inst/seconds_reg[0]__0/Q, and hodiny_top_inst/hours_counter_inst/seconds_reg[0]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/hours_counter_inst/Q[1] has multiple drivers: hodiny_top_inst/hours_counter_inst/seconds_reg[1]/Q, and hodiny_top_inst/hours_counter_inst/seconds_reg[1]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/hours_counter_inst/Q[2] has multiple drivers: hodiny_top_inst/hours_counter_inst/seconds_reg[2]__0/Q, and hodiny_top_inst/hours_counter_inst/seconds_reg[2]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/hours_counter_inst/Q[3] has multiple drivers: hodiny_top_inst/hours_counter_inst/seconds_reg[3]/Q, and hodiny_top_inst/hours_counter_inst/seconds_reg[3]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/hours_counter_inst/Q[4] has multiple drivers: hodiny_top_inst/hours_counter_inst/seconds_reg[4]/Q, and hodiny_top_inst/hours_counter_inst/seconds_reg[4]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/minutes_counter_inst/Q[0] has multiple drivers: hodiny_top_inst/minutes_counter_inst/seconds_reg[0]__0/Q, and hodiny_top_inst/minutes_counter_inst/seconds_reg[0]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/minutes_counter_inst/Q[1] has multiple drivers: hodiny_top_inst/minutes_counter_inst/seconds_reg[1]/Q, and hodiny_top_inst/minutes_counter_inst/seconds_reg[1]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/minutes_counter_inst/Q[2] has multiple drivers: hodiny_top_inst/minutes_counter_inst/seconds_reg[2]__0/Q, and hodiny_top_inst/minutes_counter_inst/seconds_reg[2]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/minutes_counter_inst/Q[3] has multiple drivers: hodiny_top_inst/minutes_counter_inst/seconds_reg[3]/Q, and hodiny_top_inst/minutes_counter_inst/seconds_reg[3]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/minutes_counter_inst/Q[4] has multiple drivers: hodiny_top_inst/minutes_counter_inst/seconds_reg[4]__0/Q, and hodiny_top_inst/minutes_counter_inst/seconds_reg[4]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/minutes_counter_inst/Q[5] has multiple drivers: hodiny_top_inst/minutes_counter_inst/seconds_reg[5]/Q, and hodiny_top_inst/minutes_counter_inst/seconds_reg[5]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/second_counter_inst/Q[0] has multiple drivers: hodiny_top_inst/second_counter_inst/seconds_reg[0]/Q, and hodiny_top_inst/second_counter_inst/seconds_reg[0]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/second_counter_inst/Q[1] has multiple drivers: hodiny_top_inst/second_counter_inst/seconds_reg[1]__0/Q, and hodiny_top_inst/second_counter_inst/seconds_reg[1]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/second_counter_inst/Q[2] has multiple drivers: hodiny_top_inst/second_counter_inst/seconds_reg[2]/Q, and hodiny_top_inst/second_counter_inst/seconds_reg[2]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/second_counter_inst/Q[3] has multiple drivers: hodiny_top_inst/second_counter_inst/seconds_reg[3]__0/Q, and hodiny_top_inst/second_counter_inst/seconds_reg[3]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/second_counter_inst/Q[4] has multiple drivers: hodiny_top_inst/second_counter_inst/seconds_reg[4]__0/Q, and hodiny_top_inst/second_counter_inst/seconds_reg[4]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net hodiny_top_inst/second_counter_inst/Q[5] has multiple drivers: hodiny_top_inst/second_counter_inst/seconds_reg[5]__0/Q, and hodiny_top_inst/second_counter_inst/seconds_reg[5]/Q.
+INFO: [Project 1-461] DRC finished with 17 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+ERROR: [Vivado_Tcl 4-78] Error(s) found during DRC. Opt_design not run.
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 796.445 ; gain = 30.309
+INFO: [Common 17-83] Releasing license: Implementation
+12 Infos, 19 Warnings, 19 Critical Warnings and 18 Errors encountered.
+opt_design failed
+ERROR: [Common 17-39] 'opt_design' failed due to earlier errors.
+
+INFO: [Common 17-206] Exiting Vivado at Wed Apr 23 16:31:14 2025...
