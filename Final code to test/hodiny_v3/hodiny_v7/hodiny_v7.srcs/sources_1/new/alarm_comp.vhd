@@ -1,0 +1,41 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity alarm_comp is
+  port (
+    SW_ON         : in  std_logic;  -- Vstupní spínač
+    clk           : in  std_logic;  -- Hlavní hodinový signál
+    A1, A2        : in  std_logic_vector(5 downto 0);
+    A3            : in  std_logic_vector(4 downto 0);
+    B1, B2        : in  std_logic_vector(5 downto 0);
+    B3            : in  std_logic_vector(4 downto 0);
+    global_disable: in  std_logic;  -- Vstupní signál pro vypnutí alarmu (např. tlačítko)
+    alarm         : out std_logic   -- Výsledný alarm - '1' pokud je aktivní, jinak '0'
+  );
+end alarm_comp;
+
+architecture Behavioral of alarm_comp is
+  signal alarm_reg : std_logic := '0';
+begin
+  process(clk)
+  begin
+    if SW_ON = '1' then  -- Kontrola na úroveň SW_ON
+      if rising_edge(clk) then
+        -- Pokud je aktivováno global_disable, vynulujeme alarm.
+        if global_disable = '1' then
+          alarm_reg <= '0';
+
+        -- Pokud ještě není alarm aktivován a čísla jsou rovná, nastav alarm.
+        elsif (A1 = B1) and (A2 = B2) and (A3 = B3) and (alarm_reg = '0') then
+          alarm_reg <= '1';
+        
+        else
+          alarm_reg <= alarm_reg;
+        end if;
+      end if;
+    end if;  -- Pokud je SW_ON na úrovni 0, proces se neprovede.
+  end process;
+
+  alarm <= alarm_reg;
+end Behavioral;
