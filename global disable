@@ -1,0 +1,18 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity GlobalDisable is
+    Port (
+        BTNC : in STD_LOGIC;
+        BTNU : in STD_LOGIC;
+        BTND : in STD_LOGIC;
+        BTNR : in STD_LOGIC;
+        BTNL : in STD_LOGIC;
+        global_disable : out STD_LOGIC
+    );
+end GlobalDisable;
+
+architecture Behavioral of GlobalDisable is
+begin
+    global_disable <= BTNC OR BTNU OR BTND OR BTNR OR BTNL;
+end Behavioral;
