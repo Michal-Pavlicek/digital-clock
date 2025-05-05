@@ -1,0 +1,90 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity zobrazeni is
+end zobrazeni;
+
+architecture behavior of zobrazeni is
+
+    -- Signals for DUT (Device Under Test)
+    signal sec_in     : STD_LOGIC_VECTOR(5 downto 0) := "100110"; -- 38 seconds
+    signal min_in     : STD_LOGIC_VECTOR(5 downto 0) := "111000"; -- 56 minutes
+    signal hour_in    : STD_LOGIC_VECTOR(4 downto 0) := "01100";  -- 12 hours
+    signal switch     : STD_LOGIC := '0';  -- Default to 0, no blinking
+    signal CAS        : STD_LOGIC_VECTOR(1 downto 0) := "00";    -- Default C
+    signal clk_480Hz  : STD_LOGIC := '0';  -- Clock signal
+    signal sel_smh    : STD_LOGIC_VECTOR(2 downto 0) := "000";  -- Default seconds display
+    signal seg        : STD_LOGIC_VECTOR(6 downto 0);  -- Seven segment output
+    signal an         : STD_LOGIC_VECTOR(7 downto 0);  -- Anode control for 7-segment display
+
+    -- Clock period for 480Hz
+    constant clk_period : time := 2.0833 ms;  -- Period for 480Hz clock (1/480Hz)
+
+begin
+
+    -- Instantiate the DUT (Device Under Test)
+    uut: entity work.bin2seg_digclk
+        port map (
+            sec_in     => sec_in,
+            min_in     => min_in,
+            hour_in    => hour_in,
+            switch     => switch,
+            CAS        => CAS,
+            clk_480Hz  => clk_480Hz,
+            sel_smh    => sel_smh,
+            seg        => seg,
+            an         => an
+        );
+
+    -- Clock generation process (480Hz)
+    clk_process : process
+    begin
+        clk_480Hz <= '0';
+        wait for clk_period / 2;
+        clk_480Hz <= '1';
+        wait for clk_period / 2;
+    end process;
+
+    -- Stimulus process to simulate time passing and check outputs
+    stim_proc: process
+    begin
+        -- Initial values
+        wait for 10 ms;
+
+        -- Check initial state
+        assert (seg = "0000000") report "Initial check failed!" severity failure;
+
+        -- Start simulation, simulate 65 seconds
+        for i in 0 to 65 loop
+            wait for 1 sec; -- Wait for 1 second (one clock cycle)
+
+            -- Increment time by 1 second
+            if to_integer(unsigned(sec_in)) = 59 then
+                sec_in <= "000000";  -- Reset seconds to 0
+                if to_integer(unsigned(min_in)) = 59 then
+                    min_in <= "000000";  -- Reset minutes to 0
+                    if to_integer(unsigned(hour_in)) = 23 then
+                        hour_in <= "00000";  -- Reset hours to 0
+                    else
+                        hour_in <= std_logic_vector(to_unsigned(to_integer(unsigned(hour_in)) + 1, 5));
+                    end if;
+                else
+                    min_in <= std_logic_vector(to_unsigned(to_integer(unsigned(min_in)) + 1, 6));
+                end if;
+            else
+                sec_in <= std_logic_vector(to_unsigned(to_integer(unsigned(sec_in)) + 1, 6));
+            end if;
+
+            -- Check if the display updates correctly
+            -- You can check if `seg` values match your expectations for each time increment
+            -- Example: after 1 second, sec_in should increment, after 60 sec, min_in should increment, etc.
+            wait for 10 ms;  -- Wait for the output to stabilize
+        end loop;
+
+        -- End of simulation
+        assert false report "Testbench completed successfully." severity note;
+        wait;
+    end process;
+
+end behavior;
