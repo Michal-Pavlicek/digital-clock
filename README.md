@@ -6,6 +6,7 @@
 * Pavlíček Michal
 * Mostecký Filip
 
-## Team members
+## Abstract
+* 
 
 ![TopLevel](images/top_level.png)
