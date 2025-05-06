@@ -33,7 +33,7 @@ fmdbfdkfd
 
 ### Hodiny_top schematic
 ![Hodiny_top](images/hodiny_top_schematic.png)
-gdgdgf
+The component combines the functionality of individual counters and serves to simplify the design, as it is used three times and helps make the entire circuit more organized. The individual blocks are described in detail below.
 
 #### KO schematic
 ![KO](images/KO_schematic.png)
