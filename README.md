@@ -17,4 +17,4 @@ To set the time on the alarm clock, user has to set the "SW_alarm" switch to on 
 
 ### Top_Level schematic
 Text
-![TopLevel](images/top_level_schematic)
+![TopLevel](images/top_level_schematic.png)
