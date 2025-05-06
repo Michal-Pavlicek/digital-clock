@@ -59,11 +59,11 @@ First, the corresponding number displayed is assigned to each number in BCD form
 
 ### Alarm_comp_schematic
 ![Alarm_comp](images/ala_comp_schematic.png)
-gdgdgf
+The block operates on the principle of comparing the value set on the alarm counter with the current time value counted by the real-time counter instance. If the two values match and the alarm activation condition is met, the alarm is triggered.
 
 ### Top_Level schematic
 ![TopLevel](images/top_level_schematic.png)
-
+Here is the wiring of the entire system.
 
 ### Top_level simulation - Automatic mode
 ![Automatic_mode](images/Automatic_mode.png)
