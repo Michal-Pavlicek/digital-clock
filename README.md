@@ -38,7 +38,9 @@ gdgdgf
 
 #### KO schematic
 ![KO](images/KO_schematic.png)
-gdgdgf
+This module **combines both manual and automatic counter control**. When **SW_set** is **inactive**, the system **operates in automatic mode**. In this mode, the add_set vector (input to the counters' VEC_set ports) is set to **"00"**, allowing the clock to run **automatically and increment every second**.
+
+When **SW_set** is **activated**, the system switches to **manual mode**: the 1 Hz clock signal is disabled, and the internal counting logic inside the KO block is enabled. Pressing the BTNR button then increments the value of the add_set vector, which determines which counter is currently being adjusted using the BTNU (up) and BTND (down) buttons. If **add_set** is set to **"10" is it for the minute counter** and **"11" is it for the hour counter**.
 
 #### Seconds_counter schematic
 ![Seconds_counter](images/seconds_counter.png)
@@ -46,7 +48,7 @@ The block functions as a **seconds counter**, with its output being a 6-bit vect
 
 This mode is defined by the value of the 2-bit input vector **VEC_set**. When **VEC_set is "00"**, the counter operates in **automatic mode**, incrementing every second. If **VEC_set is "01"**, **manual mode** is activated, which can be observed in the top-level simulation in manual mode. In this mode, the counter responds to the **BTNU** button, pressing it **increments** the counter regardless of the 1 Hz clock signal, while pressing **BTND decrements** the counter. Overflow can also occur in manual mode. 
 
-The minute and hour counters operate on the same principle, with the only difference being the value of **VEC_set**: it is set to **"10" for the minute counter** and **"11" for the hour counter**. The hour counter must also count up to 24.
+The minute and hour counters operate on the same principle, with the only difference being the value of **VEC_set** it is set to **"10" for the minute counter** and **"11" for the hour counter**. The hour counter must also count up to 24.
 
 **Button debounce** is handled by a **process triggered by a 20 Hz clock signal**. This frequency is slow enough to allow button bounce effects to settle before the next evaluation, effectively filtering them out.
 
