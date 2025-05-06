@@ -27,10 +27,6 @@ To set the time on the alarm clock, user has to set the "SW_alarm" switch to on 
 ### Example of stopwatch functionality
 ![Stopwatch](images/Stopwatch_functionality.gif)
 
-### Top_Level schematic
-![TopLevel](images/top_level_schematic.png)
-
-
 ### Hodiny_top schematic
 ![Hodiny_top](images/hodiny_top_schematic.png)
 The component combines the functionality of individual counters and serves to simplify the design, as it is used three times and helps make the entire circuit more organized. The individual blocks are described in detail below.
@@ -64,6 +60,10 @@ First, the corresponding number displayed is assigned to each number in BCD form
 ### Alarm_comp_schematic
 ![Alarm_comp](images/ala_comp_schematic.png)
 gdgdgf
+
+### Top_Level schematic
+![TopLevel](images/top_level_schematic.png)
+
 
 ### Top_level simulation - Automatic mode
 ![Automatic_mode](images/Automatic_mode.png)
