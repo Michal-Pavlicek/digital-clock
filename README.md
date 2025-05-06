@@ -20,6 +20,7 @@ To set the time on the alarm clock, user has to set the "SW_alarm" switch to on 
 
 ### Example of the seconds counter overflow
 ![Dig_clock_overflow](images/Dig_clock_overflow.gif)
+
 ### Example of the reset functionality
 ![Dig_clock_overflow](images/Dig_clock_reset_functionality.gif)
 
@@ -51,6 +52,9 @@ gdgdgf
 ![Alarm_comp](images/ala_comp_schematic.png)
 gdgdgf
 
-### Top_level simulation
-![Alarm_comp](images/top_level.png)
+### Top_level simulation - Automatic mode
+![Automatic_mode](images/Automatic_mode.png)
 sgd
+
+### Top_level simulation - Manual mode
+![Manual_mode](images/Manual_mode.png)
