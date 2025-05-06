@@ -36,6 +36,10 @@ fmdbfdkfd
 ![Hodiny_top](images/hodiny_top_schematic.png)
 gdgdgf
 
+#### KO schematic
+![KO](images/KO_schematic.png)
+gdgdgf
+
 #### Seconds_counter schematic
 ![Seconds_counter](images/seconds_counter.png)
 The block functions as a **seconds counter**, with its output being a 6-bit vector **SEC_out** representing the counted number of seconds. When an overflow occurs, the output signal carry changes state, this signal serves as an input for the minute counter. This process is automatic,that means each second the output vector increases by 1, which can be observed in the top-level simulation in automatic mode.
@@ -45,10 +49,6 @@ This mode is defined by the value of the 2-bit input vector **VEC_set**. When **
 The minute and hour counters operate on the same principle, with the only difference being the value of **VEC_set**: it is set to **"10" for the minute counter** and **"11" for the hour counter**. The hour counter must also count up to 24.
 
 **Button debounce** is handled by a **process triggered by a 20 Hz clock signal**. This frequency is slow enough to allow button bounce effects to settle before the next evaluation, effectively filtering them out.
-
-#### KO schematic
-![KO](images/KO_schematic.png)
-gdgdgf
 
 ### BIN2SEG schematic
 ![bin2seg](images/bin2seg_schematic.png)
