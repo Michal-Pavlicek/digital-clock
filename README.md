@@ -29,7 +29,7 @@ To set the time on the alarm clock, user has to set the "SW_alarm" switch to on 
 
 ### Top_Level schematic
 ![TopLevel](images/top_level_schematic.png)
-fmdbfdkfd
+
 
 ### Hodiny_top schematic
 ![Hodiny_top](images/hodiny_top_schematic.png)
