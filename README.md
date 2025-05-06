@@ -45,6 +45,6 @@ gdgdgf
 ![bin2seg](images/bin2seg_schematic.png)
 gdgdgf
 
-### Alarm_comp_schematic schematic
+### Alarm_comp_schematic
 ![Alarm_comp](images/ala_comp_schematic.png)
 gdgdgf
