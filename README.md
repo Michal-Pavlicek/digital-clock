@@ -39,7 +39,7 @@ The component combines the functionality of individual counters and serves to si
 ![KO](images/KO_schematic.png)
 This module **combines both manual and automatic counter control**. When **SW_set** is **inactive**, the system **operates in automatic mode**. In this mode, the add_set vector (input to the counters' VEC_set ports) is set to **"00"**, allowing the clock to run **automatically and increment every second**.
 
-When **SW_set** is **activated**, the system switches to **manual mode**: the 1 Hz clock signal is disabled, and the internal counting logic inside the KO block is enabled. Pressing the BTNR button then increments the value of the add_set vector, which determines which counter is currently being adjusted using the BTNU (up) and BTND (down) buttons. If **add_set** is set to **"10" is it for the minute counter** and **"11" is it for the hour counter**.
+When **SW_set** is **activated**, the system switches to **manual mode**: the 1 Hz clock signal is disabled, and the internal counting logic inside the KO block is enabled. Pressing the BTNR button then increments the value of the add_set vector, which determines which counter is currently being adjusted using the BTNU (up) and BTND (down) buttons. If **add_set** is set to **"01" is it for the second counter**, if is set to **"10" is it for the minute counter** and **"11" is for the hour counter** activation.
 
 #### Seconds_counter schematic
 ![Seconds_counter](images/seconds_counter.png)
