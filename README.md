@@ -27,7 +27,6 @@ To set the time on the alarm clock, user has to set the "SW_alarm" switch to on 
 ### Example of stopwatch functionality
 ![Stopwatch](images/Stopwatch_functionality.gif)
 
-
 ### Top_Level schematic
 ![TopLevel](images/top_level_schematic.png)
 fmdbfdkfd
