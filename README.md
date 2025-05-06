@@ -50,3 +50,7 @@ gdgdgf
 ### Alarm_comp_schematic
 ![Alarm_comp](images/ala_comp_schematic.png)
 gdgdgf
+
+### Top_level simulation
+![Alarm_comp](images/top_level.png)
+sgd
