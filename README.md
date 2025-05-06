@@ -67,7 +67,6 @@ Here is the wiring of the entire system.
 
 ### Top_level simulation - Automatic mode
 ![Automatic_mode](images/Automatic_mode.png)
-sgd
 
 ### Top_level simulation - Manual mode
 ![Manual_mode](images/Manual_mode.png)
