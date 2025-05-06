@@ -15,9 +15,15 @@ If user wants to turn on stopwatch, simply put "SW_stopwatch" switch to on posit
 
 To set the time on the alarm clock, user has to set the "SW_alarm" switch to on position. Then setting time, when the alarm will go off, is the same as manually changing time in digital clock, as described above. To turn on the alarm clock, user has to enable "SW_alarm_on" switch.
 
-## Assingment of functions to components 
+## Assignment of functions to components 
+![Nexys_board](images/Nexys.drawio.png)
 
-![TopLevel](images/Nexys.drawio.png)
+### Example of the seconds counter overflow
+![Dig_clock_overflow](images/Dig_clock_overflow.gif)
+### Example of the reset functionality
+![Dig_clock_overflow](images/Dig_clock_reset_functionality.gif)
+
+
 
 ### Top_Level schematic
 ![TopLevel](images/top_level_schematic.png)
@@ -39,6 +45,6 @@ gdgdgf
 ![bin2seg](images/bin2seg_schematic.png)
 gdgdgf
 
-### Hodiny_top schematic
-![Hodiny_top](images/hodiny_top_schematic.png)
+### Alarm_comp_schematic schematic
+![Alarm_comp](images/ala_comp_schematic.png)
 gdgdgf
