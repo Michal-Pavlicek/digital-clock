@@ -1,0 +1,34 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity delicka_20Hz is
+    Port (
+        clk_100MHz : in  STD_LOGIC;
+        reset      : in  STD_LOGIC;
+        clk_20Hz    : out STD_LOGIC
+    );
+end delicka_20Hz;
+
+architecture Behavioral of delicka_20Hz is
+    constant MAX_COUNT : integer := 2_500_000 - 1;
+    signal counter : integer range 0 to MAX_COUNT := 0;
+    signal clk_out : STD_LOGIC := '0';
+begin
+    process(clk_100MHz, reset)
+    begin
+        if reset = '1' then
+            counter <= 0;
+            clk_out <= '0';
+        elsif rising_edge(clk_100MHz) then
+            if counter = MAX_COUNT then
+                counter <= 0;
+                clk_out <= not clk_out;
+            else
+                counter <= counter + 1;
+            end if;
+        end if;
+    end process;
+
+    clk_20Hz <= clk_out;
+end Behavioral;
