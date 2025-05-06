@@ -46,7 +46,11 @@ gdgdgf
 
 ### BIN2SEG schematic
 ![bin2seg](images/bin2seg_schematic.png)
-This block is used for visual output of the clock. There are four key features. Converting the time from binary to binary-coded decimal, displaying the time on the 7-segment display, displaying the current mode and blinking feature for indication of setting the time.
+This block is used for visual output of the clock. There are four key features:
+* Converting the time from binary to binary-coded decimal
+* Displaying the time on the 7-segment display
+* Displaying the current mode
+* Blinking feature for indication of setting the time
 First, the corresponding number displayed is assigned to each number in BCD format as well as the mode indication CAS. Then there is enabling the blinking while setting function using clock signal. Then the conversion from binary to BCD takes place. Dividing the numbers to tens and units. The multiplexing overwrites the displays using clock signal, it is done fast enough to be unnoticeable by human eye. Lastly the numbers are displayed on corresponding displays.
 
 ### Alarm_comp_schematic
