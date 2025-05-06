@@ -15,4 +15,4 @@ If user wants to turn on stopwatch, simply put "SW_stopwatch" switch to on posit
 
 To set the time on the alarm clock, user has to set the "SW_alarm" switch to on position. Then setting time, when the alarm will go off, is the same as manually changing time in digital clock, as described above. To turn on the alarm clock, user has to enable "SW_alarm_on" switch.
 
-![TopLevel](images/top_level.png)
+![TopLevel](images/Dig_clock_overflow.gif)
