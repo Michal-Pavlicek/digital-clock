@@ -24,7 +24,7 @@ To set the time on the alarm clock, user has to set the "SW_alarm" switch to on 
 ![Dig_clock_overflow](images/Dig_clock_reset_functionality.gif)
 
 ### Example of stopwatch functionality
-![Stopwatch](images/Stopwach_functionality.gif)
+![Stopwatch](images/Stopwatch_functionality.gif)
 
 
 ### Top_Level schematic
