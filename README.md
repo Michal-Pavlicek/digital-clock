@@ -20,14 +20,14 @@ To set the time on the alarm clock, user has to set the "SW_alarm" switch to on 
 fmdbfdkfd
 
 ### Hodiny_top schematic
-![Hodiny_top](hodiny_top_schematic.png)
+![Hodiny_top](images/hodiny_top_schematic.png)
 gdgdgf
 
 ### Seconds_counter schematic
-![Seconds_counter](seconds_counter.png)
+![Seconds_counter](images/seconds_counter.png)
 gdgdgf
 
 #### KO schematic
-![KO](KO_schematic.png)
+![KO](images/KO_schematic.png)
 gdgdgf
 
