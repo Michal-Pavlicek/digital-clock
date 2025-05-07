@@ -67,16 +67,17 @@ Here is the wiring of the entire system.
 
 ### Top_level simulation - Automatic mode
 ![Automatic_mode](images/Automatic_mode.png)
-Here we can see that when SW_set is set to 0, SEC_out is incremented on every rising edge of clk_1Hz
+Here we can see that when **SW_set** is set to 0, **SEC_out** is incremented on every rising edge of **clk_1Hz**
 
 ### Top_level simulation - Manual mode
 ![Manual_mode](images/Manual_mode.png)
-Here we can see that when SW_set is set to 1, with every impulse from BTN_U or BTN_D, the selected time unit is incremented or decremented. Time unit selected for change is set by VEC_out, where:
+Here we can see that when **SW_set** is set to 1, with every impulse from **BTN_U** or **BTN_D**, the selected time unit is incremented or decremented. Time unit selected for change is set by **VEC_out**, where:
 * 001 - seconds
 * 010 - minutes
 * 100 - hours
 
-and can be changed with BTN_R.
+and can be changed with **BTN_R**.
+
 ## References 
 * https://github.com/tomas-fryza/vhdl-labs
 * https://chatgpt.com/
