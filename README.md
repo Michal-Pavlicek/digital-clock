@@ -59,7 +59,7 @@ First, the corresponding number displayed is assigned to each number in BCD form
 
 ### Alarm_comp_schematic
 ![Alarm_comp](images/ala_comp_schematic.png)
-The block operates on the principle of comparing the value set on the alarm counter with the current time value counted by the real-time counter instance. If the two values match and the alarm activation condition is met, the alarm is triggered.
+The block operates on the principle of comparing the time set on the alarm counter with the current time counted by the real-time counter instance. If the two times match and the alarm activation condition is met, the alarm is triggered. At this moment, an internal signal is activated, indicating that the alarm condition has been reached. This signal remains active until the user presses the 'UP' button, which deactivates the alarm and resets the signal
 
 ### Top_Level schematic
 ![TopLevel](images/top_level_schematic.png)
