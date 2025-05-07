@@ -72,5 +72,6 @@ Here is the wiring of the entire system.
 ![Manual_mode](images/Manual_mode.png)
 
 ## References 
-*
-*
+* https://github.com/tomas-fryza/vhdl-labs
+* https://chatgpt.com/
+* https://vhdl.lapinoo.net/
