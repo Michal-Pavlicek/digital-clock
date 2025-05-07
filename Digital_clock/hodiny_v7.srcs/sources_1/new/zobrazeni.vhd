@@ -20,7 +20,7 @@ architecture Behavioral of bin2seg_digclk is
 
     signal clk_cnt    : integer := 0;
     signal digit_idx  : integer range 0 to 7 := 0;
-    signal digits     : std_logic_vector(55 downto 0); -- 8 digits � 7 segments
+    signal digits     : std_logic_vector(55 downto 0);
     signal blink_en   : std_logic := '0';
 
     signal seg_data   : std_logic_vector(6 downto 0);
@@ -68,8 +68,8 @@ begin
     process(clk_480Hz)
         variable blink_cnt : integer := 0;
     begin
-        if rising_edge(clk_480Hz) then  -- zm?n?no na clk_480Hz
-            if blink_cnt = 119 then  -- zm?n?no pro 480Hz, ka�d�ch 120 cykl? (pro p?lsekundov� blik�n�)
+        if rising_edge(clk_480Hz) then
+            if blink_cnt = 119 then
                 blink_en <= not blink_en;
                 blink_cnt := 0;
             else
@@ -89,9 +89,9 @@ begin
     sec_bcd_lo  <= std_logic_vector(to_unsigned(to_integer(unsigned(sec_in)) mod 10, 4));
 
     -- Digit multiplexer
-    process(clk_480Hz)  -- zm?n?no na clk_480Hz
+    process(clk_480Hz)
     begin
-        if rising_edge(clk_480Hz) then  -- zm?n?no na clk_480Hz
+        if rising_edge(clk_480Hz) then
             digit_idx <= (digit_idx + 1) mod 8;
         end if;
     end process;
