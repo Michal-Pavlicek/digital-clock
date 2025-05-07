@@ -76,7 +76,7 @@ Here we can see that when SW_set is set to 1, with every impulse from BTN_U or B
 * 010 - minutes
 * 100 - hours
 
-and can be changed with BTN_R
+and can be changed with BTN_R.
 ## References 
 * https://github.com/tomas-fryza/vhdl-labs
 * https://chatgpt.com/
