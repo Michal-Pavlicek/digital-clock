@@ -18,9 +18,7 @@ end bin2seg_digclk;
 
 architecture Behavioral of bin2seg_digclk is
 
-    signal clk_cnt    : integer := 0;
     signal digit_idx  : integer range 0 to 7 := 0;
-    signal digits     : std_logic_vector(55 downto 0);
     signal blink_en   : std_logic := '0';
 
     signal seg_data   : std_logic_vector(6 downto 0);
