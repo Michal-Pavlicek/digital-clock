@@ -104,7 +104,7 @@ begin
 
     case digit_idx is
         when 0 =>  -- Hour high
-            if switch = '1' and sel_smh = "010" and blink_en = '0' then
+            if switch = '1' and sel_smh = "100" and blink_en = '0' then
                 seg_data <= "1111111";
             else
                 seg_data <= bcd2seg(hour_bcd_hi);
@@ -112,7 +112,7 @@ begin
             an_data <= "01111111";
 
         when 1 =>  -- Hour low
-            if switch = '1' and sel_smh = "010" and blink_en = '0' then
+            if switch = '1' and sel_smh = "100" and blink_en = '0' then
                 seg_data <= "1111111";
             else
                 seg_data <= bcd2seg(hour_bcd_lo);
@@ -120,7 +120,7 @@ begin
             an_data <= "10111111";
 
         when 2 =>  -- Min high
-            if switch = '1' and sel_smh = "001" and blink_en = '0' then
+            if switch = '1' and sel_smh = "010" and blink_en = '0' then
                 seg_data <= "1111111";
             else
                 seg_data <= bcd2seg(min_bcd_hi);
@@ -128,7 +128,7 @@ begin
             an_data <= "11011111";
 
         when 3 =>  -- Min low
-            if switch = '1' and sel_smh = "001" and blink_en = '0' then
+            if switch = '1' and sel_smh = "010" and blink_en = '0' then
                 seg_data <= "1111111";
             else
                 seg_data <= bcd2seg(min_bcd_lo);
@@ -136,7 +136,7 @@ begin
             an_data <= "11101111";
 
         when 4 =>  -- Sec high
-            if switch = '1' and sel_smh = "000" and blink_en = '0' then
+            if switch = '1' and sel_smh = "001" and blink_en = '0' then
                 seg_data <= "1111111";
             else
                 seg_data <= bcd2seg(sec_bcd_hi);
@@ -144,7 +144,7 @@ begin
             an_data <= "11110111";
 
         when 5 =>  -- Sec low
-            if switch = '1' and sel_smh = "000" and blink_en = '0' then
+            if switch = '1' and sel_smh = "001" and blink_en = '0' then
                 seg_data <= "1111111";
             else
                 seg_data <= bcd2seg(sec_bcd_lo);
