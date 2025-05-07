@@ -39,11 +39,11 @@ When **SW_set** is **activated**, the system switches to **manual mode**: the 1 
 
 #### Seconds_counter schematic
 ![Seconds_counter](images/seconds_counter.png)
-The block functions as a **seconds counter**, with its output being a 6-bit vector **SEC_out** representing the counted number of seconds. When an overflow occurs, the output signal carry changes state, this signal serves as an input for the minute counter. This process is automatic,that means each second the output vector increases by 1, which can be observed in the top-level simulation in automatic mode.
+The block functions as a **seconds counter**, with its output being a 6-bit vector **SEC_out** representing the counted number of seconds. When an overflow occurs, the output signal carry changes state, this signal serves as an input for the minute counter. This process is automatic, that means each second the output vector increases by 1, which can be observed in the top-level simulation in automatic mode.
 
 This mode is defined by the value of the 2-bit input vector **VEC_set**. When **VEC_set is "00"**, the counter operates in **automatic mode**, incrementing every second. If **VEC_set is "01"**, **manual mode** is activated, which can be observed in the top-level simulation in manual mode. In this mode, the counter responds to the **BTNU** button, pressing it **increments** the counter regardless of the 1 Hz clock signal, while pressing **BTND decrements** the counter. Overflow can also occur in manual mode. 
 
-The minute and hour counters operate on the same principle, with the only difference being the value of **VEC_set** it is set to **"10" for the minute counter** and **"11" for the hour counter**. The hour counter must also count up to 24.
+The minute and hour counters operate on the same principle, with the only difference being the value of **VEC_set** it is set to **"10" for the minute counter** and **"11" for the hour counter**. The hour counter must also count up to 23.
 
 **Button debounce** is handled by a **process triggered by a 20 Hz clock signal**. This frequency is slow enough to allow button bounce effects to settle before the next evaluation, effectively filtering them out.
 
